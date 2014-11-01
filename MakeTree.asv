@@ -1,0 +1,49 @@
+function result = MakeTree(examples, attributes, targets)
+
+result = struct('op',[],'kids',[],'class',[]);
+
+%Case that all examples are positive/negative for the training set
+if isequal(examples,targets)
+    result.class = targets(1);
+
+%Case that there is no more attributes left to split on
+elseif isempty(attributes)
+    result.class = mode(targets);
+
+else
+    best_attribute = ChooseAttribute(examples, attributes, targets);
+    result.op = best_attribute;
+    result.kids = cell(1,2);
+    results.kids{1} = struct('op',[],'kids',[],'class',[]);
+    results.kids{2} = struct('op',[],'kids',[],'class',[]);
+    
+    Negative_examples = [];
+    Positive_examples = [];
+    
+    Negative_targets = [];
+    Positive_targets = [];
+    
+    for i=1:numel(targets)
+        if examples(i,best_attribute) == 0;
+            Negative_examples = [examples(i,:);Negative_examples];
+            Negative_targets = [targets(i);Negative_targets];
+            %Consider preallocation (trade space for speed)
+        else
+            Positive_examples = [examples(i,:);Positive_examples];
+            Positive_targets = [targets(i);Positive_targets];
+            %Consider preallocation (trade space for speed)
+        end
+    end
+    
+    if isempty(Negative_examples)
+        result.kids{1}.class = mode(targets);
+    end
+    
+    if isempty(Positive_examples)
+        result.kids{2}.class
+        
+end
+
+
+
+end

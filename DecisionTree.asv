@@ -1,0 +1,9 @@
+load('cleandata_students.mat');
+
+label = 1;
+
+attributes = zeros(1004,1);
+
+for elm = y
+    if(elm ~= label
+end
