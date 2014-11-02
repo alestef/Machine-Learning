@@ -28,52 +28,19 @@ else
     new_attr = attributes(attributes ~= best_attribute);
     
     for i=0:1
-        for j=1:numel(targets)
-            if examples(j,best_attribute) == i
-                new_examples = [new_examples;examples(j,:)];
-                new_targets = [new_targets;targets(j)];
-            end
-        end
+        idx = examples(:,best_attribute) == i;
+        new_examples = examples(idx,:);
+        new_targets = [targets(idx)];
         
         if isempty(new_examples)
             result.kids{i+1}.class = mode(targets);
         else
             result.kids{i+1} = MakeTree(new_examples, new_attr, new_targets);
-            %return;
         end
         
         new_examples = [];
         new_targets = [];
     end
-    
-    %for i=1:numel(targets)
-    %    if examples(i,best_attribute) == 0;
-    %        Negative_examples = [examples(i,:);Negative_examples];
-    %        Negative_targets = [targets(i);Negative_targets];
-    %        %Consider preallocation (trade space for speed)
-    %    else
-    %        Positive_examples = [examples(i,:);Positive_examples];
-    %        Positive_targets = [targets(i);Positive_targets];
-    %        %Consider preallocation (trade space for speed)
-    %    end
-    %end
-
-    
-    %Negative branch
-    %if isempty(Negative_examples)
-    %    result.kids{1}.class = mode(targets);
-    %else
-    %    result.kids{1} = MakeTree(Negative_examples, new_attr, Negative_targets);
-    %end
-    
-    %Positive Branch
-    %if isempty(Positive_examples)
-    %    result.kids{2}.class = mode(targets);
-    %    return;
-    %else
-    %    result.kids{2} = MakeTree(Positive_examples, new_attr, Positive_targets);
-    %    return;
-    %end
 end
 
 end
