@@ -1,25 +1,25 @@
-function cmatrix = ConfusionMatrix;
+function cmatrix = ConfusionMatrix(data_set_filename)
+    load(data_set_filename);
 
-load 'noisydata_students.mat';
+    T = struct('t',{[],[],[],[],[],[],});
 
-T = struct('t',{[],[],[],[],[],[],});
+    cutoff = round(numel(y)/10)*9;
 
-cutoff = round(numel(y)/10)*9;
+    training_examples = x(1:cutoff,:);
+    training_targets = y(1:cutoff);
+    
+    real_targets = y(cutoff+1:numel(y));
 
-training_examples = x([1:cutoff],:);
+    for i=1:6 
+        T(i).t = DecisionTree(i, training_examples, training_targets);
+    end
 
-training_targets = y([1:cutoff]);
-real_targets = y([cutoff+1:numel(y)]);
+    predictions = TestTrees(T,x(cutoff+1:numel(y),:));
 
-for i=1:6 
-    T(i).t = DecisionTree(i, training_examples, training_targets);
-end
+    cmatrix = zeros(6,6);
 
-predictions = TestTrees(T,x);
-
-cmatrix = zeros(6,6);
-
-for i=1:numel(real_targets)
-    cmatrix(real_targets(i), predictions(i)) = cmatrix(real_targets(i), predictions(i)) + 1;
+    for i=1:numel(real_targets)
+        cmatrix(real_targets(i), predictions(i)) = cmatrix(real_targets(i), predictions(i)) + 1;
+    end
 end
 
