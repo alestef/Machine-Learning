@@ -21,7 +21,7 @@
     
     
     function ig = I(p,n)
-        ig = -(p/(p+n)) * log2(p/(p+n)) - (n/(p+n)) * log2(n/(p+n));
+        ig = -(p/(p+n+eps)) * log2((p/(p+n+eps))+eps) - (n/(p+n)) * log2((n/(p+n+eps))+eps);
     end
     
     function rem = remainder(attribute,p,n,examples,targets)
@@ -51,7 +51,7 @@
            end
        end
        
-       rem = ((p0+n0)/(p+n))* I(p0,n0) + ((p1+n1)/(p+n))* I(p1,n1);
+       rem = ((p0+n0)/(p+n+eps))* I(p0,n0) + ((p1+n1)/(p+n+eps))* I(p1,n1);
        
     end
 

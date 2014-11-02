@@ -23,12 +23,10 @@ else
     result.kids{1} = struct('kids',[],'op',[],'class',[]);
     result.kids{2} = struct('kids',[],'op',[],'class',[]);
     
-    new_examples = [];
-    new_targets = [];
     new_attr = attributes(attributes ~= best_attribute);
     
     for i=0:1
-        idx = examples(:,best_attribute) == i;
+        idx = examples(:,best_attribute) == i; %Picks appropriate rows
         new_examples = examples(idx,:);
         new_targets = [targets(idx)];
         
@@ -37,9 +35,6 @@ else
         else
             result.kids{i+1} = MakeTree(new_examples, new_attr, new_targets);
         end
-        
-        new_examples = [];
-        new_targets = [];
     end
 end
 
