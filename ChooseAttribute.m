@@ -8,20 +8,19 @@
         current_best_attribute = attributes(1);
 
         for idx = 2:numel(attributes)
-            current_igain = igain(attributes(idx),p,n,examples,targets);
+            current_igain = igain(attributes(idx),p,n,examples,targets);            
 
             if current_best_igain < current_igain
                 current_best_attribute = attributes(idx);
                 current_best_igain = current_igain;
             end
         end
-
         best_attribute = current_best_attribute;
     end
     
     
     function ig = I(p,n)
-        ig = -(p/(p+n+eps)) * log2((p/(p+n+eps))+eps) - (n/(p+n)) * log2((n/(p+n+eps))+eps);
+        ig = -(p/(p+n+eps)) * log2((p/(p+n+eps))+eps) - (n/(p+n+eps)) * log2((n/(p+n+eps))+eps);
     end
     
     function rem = remainder(attribute,p,n,examples,targets)
@@ -56,7 +55,7 @@
     end
 
     function gain = igain(attribute,p,n,examples,targets)
-        gain = I(p,n) - remainder(attribute,p,n,examples,targets);
+        gain = I(p,n) - remainder(attribute,p,n,examples,targets) + eps;
     end
         
     

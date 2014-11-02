@@ -20,6 +20,7 @@ else
     best_attribute = ChooseAttribute(examples, attributes, targets);
     result.op = best_attribute;
     result.kids = cell(1,2);
+    
     result.kids{1} = struct('kids',[],'op',[],'class',[]);
     result.kids{2} = struct('kids',[],'op',[],'class',[]);
     
@@ -36,6 +37,22 @@ else
             result.kids{i+1} = MakeTree(new_examples, new_attr, new_targets);
         end
     end
+    
+    %WARNING: EXTREMELY HACKY AND NON-OPTIMAL SOLUTION
+    %There is a bug where I'll get a long chain of choices that all lead
+    %only to one value. To prevent this, I prune the tree as I go along. I
+    %don't actually know why that happens.
+    if (isequal(result.kids{1}.class,1)) && (isequal(result.kids{2}.class,1))
+        result.op = [];
+        result.kids = [];
+        result.class = 1;
+    elseif(isequal(result.kids{1}.class,0)) && (isequal(result.kids{2}.class,0))
+        result.op = [];
+        result.kids = [];
+        result.class = 0;
+    end
+    %End of hacky segment.
+    
 end
 
 end

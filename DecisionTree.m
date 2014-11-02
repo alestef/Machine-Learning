@@ -1,10 +1,10 @@
-function result = DecisionTree()
+function result = DecisionTree(label_given)
 
-load('cleandata_students.mat');
+load('noisydata_students.mat');
 
-label = 1;
+label = label_given;
 
-targets = zeros(1,1004);
+targets = zeros(1,numel(y));
 
 for i=1:numel(y),
     if(y(i) == label)
