@@ -1,6 +1,6 @@
 function cmatrix = ConfusionMatrix;
 
-load 'cleandata_students.mat';
+load 'noisydata_students.mat';
 
 T = struct('t',{[],[],[],[],[],[],});
 
