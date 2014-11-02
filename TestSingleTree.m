@@ -1,12 +1,12 @@
-function [binary_label, depth] = TestSingleTree(tree, example, given_depth)
+function [binary_label, depth] = TestSingleTree(tree, example)
 
-[binary_label, depth] = SingleTreeHelper(tree, example, given_depth);
+[binary_label, depth] = SingleTreeHelper(tree, example, 0);
 
 end
 
 
 function [binary_label, depth] = SingleTreeHelper(tree, example, given_depth)
-    while ~(isempty(tree.op))
+    while ~isempty(tree.class)
         attribute = example(tree.op);
             SingleTreeHelper(tree.kids{attribute+1}, example, given_depth+1);
     end
