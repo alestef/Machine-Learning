@@ -3,8 +3,12 @@ function result = MakeTree(examples, attributes, targets)
 result = struct('kids',[],'op',[],'class',[]);
 
 %Case that all examples are positive/negative for the training set
-if isequal(examples,targets)
-    result.class = targets(1);
+if not(any(targets))
+    result.class = 0;
+    return;
+    
+elseif all(targets)
+    result.class = 1;
     return;
 
 %Case that there is no more attributes left to split on
@@ -33,10 +37,9 @@ else
         
         if isempty(new_examples)
             result.kids{i+1}.class = mode(targets);
-            return;
         else
             result.kids{i+1} = MakeTree(new_examples, new_attr, new_targets);
-            return;
+            %return;
         end
         
         new_examples = [];
