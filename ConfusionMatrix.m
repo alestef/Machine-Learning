@@ -1,7 +1,7 @@
 function cmatrix = ConfusionMatrix(data_set_filename)
     load(data_set_filename);
 
-    T = struct('t',{[],[],[],[],[],[],});
+    T = cell(6,1);
 
     cutoff = round(numel(y)/10)*9;
 
@@ -11,7 +11,8 @@ function cmatrix = ConfusionMatrix(data_set_filename)
     real_targets = y(cutoff+1:numel(y));
 
     for i=1:6 
-        T(i).t = DecisionTree(i, training_examples, training_targets);
+        T{i} = struct('kids',[],'op',[],'class',[]);
+        T{i} = DecisionTree(i, training_examples, training_targets);
     end
 
     predictions = TestTrees(T,x(cutoff+1:numel(y),:));
