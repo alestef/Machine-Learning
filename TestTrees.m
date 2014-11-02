@@ -1,7 +1,7 @@
 function predictions = TestTrees(T, x2)
 % Where T is a list of all Decision trees, and x2 is a list of examples
 
-predictions = zeros(numel(x2), 1);
+predictions = zeros(numel(x2(:,1)), 1);
 
 for i=1:numel(x2(:,1))
     least_depth = intmax('int32');
