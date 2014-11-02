@@ -2,7 +2,7 @@ function cmatrix = ConfusionMatrix;
 
 load 'cleandata_students.mat';
 
-T = struct('t',{[],[],[],[],[],[],[]});
+T = struct('t',{[],[],[],[],[],[],});
 
 cutoff = round(numel(y)/10)*9;
 
@@ -15,7 +15,7 @@ for i=1:6
     T(i).t = DecisionTree(i, training_examples, training_targets);
 end
 
-predictions = testTrees(T,x);
+predictions = TestTrees(T,x);
 
 cmatrix = zeros(6,6);
 
