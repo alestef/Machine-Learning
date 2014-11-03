@@ -1,6 +1,5 @@
 function [ t_set, t_targets, v_set, v_targets ] = Fold(i, all, targets)
-    NUM_FOLDS = 10;
-    fold_size = numel(targets) / NUM_FOLDS;
+    fold_size = numel(targets) / NUM_FOLDS();
     t_set = [];
     t_targets = [];
     
@@ -9,7 +8,7 @@ function [ t_set, t_targets, v_set, v_targets ] = Fold(i, all, targets)
         t_targets = targets(1 : ((i-1) * fold_size));
     end
     
-    if (i ~= NUM_FOLDS)
+    if (i ~= NUM_FOLDS())
         t_set = [t_set; all((i * fold_size):numel(targets), :)];
         t_targets = [t_targets; targets((i * fold_size):numel(targets))];
     end
