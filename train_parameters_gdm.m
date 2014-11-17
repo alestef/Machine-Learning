@@ -1,4 +1,4 @@
-function [ optimal_gdm_network, best_mc ] = train_parameters_gdm( t_x, t_t, v_x, v_t, nodes, best_lr )  
+function [ optimal_gdm_network, err, best_mc ] = train_parameters_gdm( t_x, t_t, v_x, v_t, nodes, best_lr )  
     lower = 0.75;
     upper = 0.99;
     NUM_STEPS = 1000;
@@ -14,7 +14,7 @@ function [ optimal_gdm_network, best_mc ] = train_parameters_gdm( t_x, t_t, v_x,
         errors(i) = CalculateError(v_t, predictions);
     end
     
-    [~, min_index] = min(errors);
+    [err, min_index] = min(errors);
     
     best_mc = ((min_index - 1) * step_size) + lower;
         

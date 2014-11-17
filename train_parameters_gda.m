@@ -1,4 +1,4 @@
-function [ optimal_gda_network, best_lr_dec, best_lr_inc ] = train_parameters_gda( t_x, t_t, v_x, v_t, nodes, best_lr )  
+function [ optimal_gda_network, err, best_lr_dec, best_lr_inc ] = train_parameters_gda( t_x, t_t, v_x, v_t, nodes, best_lr )  
    
 lower = 1.0;
     upper = 1.5;
@@ -77,5 +77,6 @@ lower = 1.0;
     optimal_gda_network.trainParam.lr_inc = best_lr_inc;
     optimal_gda_network.trainParam.lr_dec = best_lr_dec;
     optimal_gda_network.trainParam.lr = best_lr;
-    optimal_gda_network = train(optimal_gda_network, gda_x, gda_y); 
+    optimal_gda_network = train(optimal_gda_network, gda_x, gda_y);
+    err = CalculateError(v_t, TestANN(optimal_gda_network, v_x));
 end
