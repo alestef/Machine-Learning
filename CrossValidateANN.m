@@ -25,8 +25,8 @@ function [ avg_error, avg_confusion_matrix, avg_metrics ] = CrossValidateANN(dat
         
         trainFnc = 'trainlm';
         % TODO(ticktakashi): Find optimal function and function params
-        net = NeuralNetwork(f_x, f_t, validation_x, validation_t, node_number, trainFnc);
-        
+        [net, a, b] = NeuralNetwork(f_x, f_t, validation_x, validation_t, node_number, trainFnc);
+        net = train(net, a, b);
         p_t = TestANN(net, v_x);
         tot_error = tot_error + CalculateError(v_t, p_t);
         tot_cmatrix = tot_cmatrix + ConfusionMatrix(v_t, p_t);
