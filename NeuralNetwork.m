@@ -1,5 +1,5 @@
 function [ network, all_x, all_y ] = NeuralNetwork(training_examples, training_targets, validation_examples, validation_targets, nodes, trainFnc)
-    num_epochs = 5000;
+    num_epochs = 25000;
     [t_x, t_y] = ANNdata(training_examples, training_targets);
     [v_x, v_y] = ANNdata(validation_examples, validation_targets);
     

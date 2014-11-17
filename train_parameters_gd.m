@@ -1,7 +1,7 @@
 function [ optimal_gd_network, best_lr ] = train_parameters_gd( t_x, t_t, v_x, v_t, nodes )  
     lower = 0.0001;
     upper = 0.1;
-    NUM_STEPS = 100;
+    NUM_STEPS = 1000;
     step_size = (upper - lower) / NUM_STEPS;
     errors = zeros(NUM_STEPS, 1);
     
