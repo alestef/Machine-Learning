@@ -1,9 +1,10 @@
 function [ avg_error, avg_confusion_matrix, avg_metrics ] = CrossValidateANN(data_set) 
     load(data_set);
+    [train_x, train_t, validation_x, validation_t] = Fold(1, x, y);
     tot_error = 0;
     tot_cmatrix = zeros(6, 6);
     for i = 1:NUM_FOLDS()
-        [t_x, t_t, v_x, v_t] = Fold(i, x, y);
+        [f_x, f_t, v_x, v_t] = Fold(i, train_x, train_t);
         
         % TODO(ticktakashi): Find optimal parameters.
         % 1. Split t_x into training_t_x and validation_t_x.
@@ -15,11 +16,16 @@ function [ avg_error, avg_confusion_matrix, avg_metrics ] = CrossValidateANN(dat
         % 4. Select the best combination of parameters.
         % NOTE: The toolbox will automatically divide the data, we need
         %       to prevent this and supply our own.
-        layers = [10 ,10];
+        
+        % NOTE: We assume that 1 hidden layer is sufficient and optimal, 
+        %       since more than that would make this as a "Deep" network
+        %       that we cannot train without smart weight initialization.
+        % Calculate optimal number of nodes in layer
+        [~, node_number] = CalculateOptimalNumNodes(f_x, f_t, validation_x, validation_t);
+        
         trainFnc = 'trainlm';
-        epochs = 1;
-        net = NeuralNetwork(t_x, t_t, layers, trainFnc, epochs);
-        % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        % TODO(ticktakashi): Find optimal function and function params
+        net = NeuralNetwork(f_x, f_t, validation_x, validation_t, node_number, trainFnc);
         
         p_t = TestANN(net, v_x);
         tot_error = tot_error + CalculateError(v_t, p_t);
