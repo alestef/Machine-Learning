@@ -1,5 +1,5 @@
-function [ min_error, num_nodes ] = CalculateOptimalNumNodes(t_x, t_t, v_x, v_t)
-    errors = zeros(50, 1);
+function [ min_error, num_nodes ] = CalculateOptimalNumNodes(t_x, t_t, v_x, v_t, NUM_STEPS)
+    errors = zeros(NUM_STEPS, 1);
     for i = 1:numel(errors)
         [network, a, b] = NeuralNetwork(t_x, t_t, v_x, v_t, i, 'trainlm');
         network = train(network, a, b);
