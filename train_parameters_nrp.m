@@ -19,7 +19,6 @@
     
     lower = 0.4;
     upper = 0.6;
-    NUM_STEPS = 1000;
     step_size = (upper - lower) / NUM_STEPS;
     errors = zeros(NUM_STEPS, 1);
     
