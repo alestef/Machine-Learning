@@ -1,8 +1,8 @@
-function [ cbr ] = AddCase( cbr, cbr_case, measure)
+function [ cbr ] = AddCase( cbr, cbr_case)
     fits_any_bucket = 0;
     % Find buckets that cbr_case fits into
     for i=1:numel(cbr.buckets)
-        if (casesSimilarity(cbr.buckets(i).origin, cbr_case, measure) >  (1 - cbr.radius))
+        if (casesSimilarity(cbr.buckets(i).origin, cbr_case, cbr.measure ) >  (1 - cbr.radius))
             fits_any_bucket = 1;
             % foreach matching bucket
             % If the case exists in the bucket, increment typicality
