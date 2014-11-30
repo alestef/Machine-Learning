@@ -9,6 +9,7 @@ function [ cbr ] = CBRinit(x, y)
     cbr.radius = 0.5;
     cbr.buckets = first_bucket;
     cbr.measure = 'length';
+    cbr.k = 10;
     
     % Add all cases (created from x and y) to this CBR
     for i=2:numel(x(:, 1))
