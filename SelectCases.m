@@ -5,18 +5,33 @@ function [ highestK ] = SelectCases( novel_case, near_cases, cbr, k)
     middle = idivide(int32(numel(near_cases)), int32(2), 'ceil');
     pivot = near_cases(middle);
     % Split the near_cases list into left and right
-    left = struct('problem', {}, 'typicality', {}, 'solution', {});
-    right = pivot;
-
-    for i=1:numel(near_cases) 
-        if (casesSimilarity(novel_case, near_cases(i), cbr.measure) <= ...
+    left = struct('id', {}, 'problem', {}, 'typicality', {}, 'solution', {});
+    right = struct('id', {}, 'problem', {}, 'typicality', {}, 'solution', {});
+    same = struct('id', {}, 'problem', {}, 'typicality', {}, 'solution', {});
+    
+    for i=1:numel(near_cases)
+        if (casesSimilarity(novel_case, near_cases(i), cbr.measure) > ...
                 casesSimilarity(novel_case, pivot, cbr.measure))
-            left(end + 1) = near_cases(i);
-        else
             right(end + 1) = near_cases(i);
+        elseif (casesSimilarity(novel_case, near_cases(i), cbr.measure) == ...
+                casesSimilarity(novel_case, pivot, cbr.measure))
+            same(end + 1) = near_cases(i);
+        else
+            left(end + 1) = near_cases(i);
         end
     end
-        
+    
+    % Divide the identical cases evenly over both lists.
+    % TODO: Base this on typicality instead.
+    if numel(same) > 1
+        mid = idivide(int32(numel(same)), int32(2), 'ceil');
+        left = [left, same(1:mid)];
+        right = [right, same((mid + 1): end)];
+    else
+        right(end + 1) = same(1);
+    end
+    
+    right = RemoveDuplicateCases(right);
     % Depending on the length of the right list, recurse or do not recurse
     if numel(right) == k 
         % If we've got the right amount, return.
