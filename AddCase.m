@@ -1,4 +1,4 @@
-function [ cbr ] = AddCase( cbr, cbr_case)
+function [ cbr ] = AddCase(cbr, cbr_case)
     fits_any_bucket = 0;
     % Find buckets that cbr_case fits into
     for i=1:numel(cbr.buckets)

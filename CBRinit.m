@@ -14,7 +14,7 @@ function [ cbr ] = CBRinit(x, y)
     for i=2:numel(x(:, 1))
         a_vec = AUVector(x(i, :));
         new_case = assignCase(a_vec, y(i));
-        cbr = AddCase(cbr, new_case, 'length');
+        cbr = AddCase(cbr, new_case);
     end
 end
 
