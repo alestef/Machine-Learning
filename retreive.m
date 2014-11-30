@@ -22,7 +22,7 @@ function [ case_struct ] = retreive( cbr, newcase )
         end
     end
     
-    topKCases = selectCases( newcase, listNearCases, cbr, k);
+    topKCases = SelectCases( newcase, listNearCases, cbr, k);
     labelsProbability = zeros(6);
     sumDistanceTypicality = 0;
     
