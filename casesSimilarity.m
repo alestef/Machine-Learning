@@ -19,7 +19,7 @@ if (strcmp(measure,'length'))
         sum = sum + ( vector1(i)-vector2(i) )^2;
     end
    
-    similarity = sqrt(sum) / sqrt(45);
+    similarity = (1 - sqrt(sum) / sqrt(45));
 elseif (measure.STRCMP('matchAU'))
     % matching_AUs / avg_vec_length
     similarity = numel(intersect(a.problem, b.problem)) / ((numel(a.problem) + numel(b.problem)) / 2)

@@ -1,4 +1,4 @@
-function [ case_struct ] = Retrieve( cbr, newcase )
+function [ case_struct, topKCases ] = Retrieve( cbr, newcase )
 
     best = 0;
     for i=1:numel(cbr.buckets)
@@ -8,17 +8,18 @@ function [ case_struct ] = Retrieve( cbr, newcase )
         end
     end
     
+    best = 1 - best;
     maxDistanceToCheck = cbr.radius + best;
     listNearCases = newcase;
     
     for i=1:numel(cbr.buckets)
-        if (casesSimilarity(cbr.buckets(i).origin, newcase, cbr.measure ) <=  maxDistanceToCheck)
+        if ((1 - casesSimilarity(cbr.buckets(i).origin, newcase, cbr.measure)) <=  maxDistanceToCheck)
             listNearCases = [listNearCases, cbr.buckets(i).elements];
         end
     end
-    
+
     topKCases = SelectCases( newcase, listNearCases, cbr, cbr.k);
-    labelsProbability = zeros(6);
+    labelsProbability = zeros(6, 1);
     sumDistanceTypicality = 0;
     
     for i=1:cbr.k
@@ -35,8 +36,7 @@ function [ case_struct ] = Retrieve( cbr, newcase )
     end
    
     [~, idx] = max(labelsProbability);
-    
+    disp(labelsProbability);
     case_struct.solution = idx;
-
 end
 

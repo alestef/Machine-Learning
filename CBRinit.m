@@ -6,7 +6,7 @@ function [ cbr ] = CBRinit(x, y)
     
     % Initialize the CBR struct, a list of buckets.
     cbr = struct();
-    cbr.radius = 0.5;
+    cbr.radius = 0.45;
     cbr.buckets = first_bucket;
     cbr.measure = 'length';
     cbr.k = 10;
