@@ -20,9 +20,9 @@ if (strcmp(measure,'length'))
     end
    
     similarity = (1 - sqrt(sum) / sqrt(45));
-elseif (measure.STRCMP('matchAU'))
+elseif (strcmp(measure, 'matchAU'))
     % matching_AUs / avg_vec_length
-    similarity = numel(intersect(a.problem, b.problem)) / ((numel(a.problem) + numel(b.problem)) / 2)
+    similarity = numel(intersect(a.problem, b.problem)) / ((numel(a.problem) + numel(b.problem)) / 2);
 else
     % City-block(Manhattan) distance(L1-norm)
     vector1 = zeros(1,45);
@@ -42,5 +42,5 @@ else
         sum = sum + abs(vector1(i)-vector2(i));
     end
    
-    similarity = sum;  
+    similarity = 1 - (sum / (45 + 45));  
 end
