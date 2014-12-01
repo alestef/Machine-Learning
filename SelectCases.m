@@ -31,7 +31,9 @@ function [ highestK ] = SelectCases( novel_case, near_cases, cbr, k)
         right(end + 1) = same(1);
     end
     
-    right = RemoveDuplicateCases(right);
+    % TODO: Uncomment this when using bucket allocation.
+    %right = RemoveDuplicateCases(right);
+    
     % Depending on the length of the right list, recurse or do not recurse
     if numel(right) == k 
         % If we've got the right amount, return.

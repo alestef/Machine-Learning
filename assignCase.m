@@ -8,7 +8,7 @@ end
 case_struct.id = CUR_ID;
 case_struct.problem = x;
 
-if (label== 0)
+if (label == 0)
     case_struct.typicality = 0; % if there is no label, typicality is zero
 end
 
